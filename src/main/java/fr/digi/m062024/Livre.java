@@ -2,10 +2,13 @@ package fr.digi.m062024;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name="livre")
 public class Livre {
     @Id
+    @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -14,6 +17,9 @@ public class Livre {
 
     @Column(name="AUTEUR", length = 50, nullable = false, unique = true)
     private String auteur;
+
+    @ManyToMany(mappedBy = "livres")
+    private Set<Emprunt> emprunts;
 
     public Livre() {
     }
@@ -81,5 +87,32 @@ public class Livre {
      */
     public void setAuteur(String auteur) {
         this.auteur = auteur;
+    }
+
+    /**
+     * Getter for emprunts
+     * return emprunts
+     */
+    public Set<Emprunt> getEmprunts() {
+        return emprunts;
+    }
+
+    /**
+     * Setter for emprunts
+     *
+     * @param emprunts to set
+     */
+    public void setEmprunts(Set<Emprunt> emprunts) {
+        this.emprunts = emprunts;
+    }
+
+    @Override
+    public String toString() {
+        return "Livre{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", auteur='" + auteur + '\'' +
+                ", emprunts=" + emprunts +
+                '}';
     }
 }
